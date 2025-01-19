@@ -38,6 +38,11 @@ def getData():
 def register():
     username, password = getData()
     os.system("cls")
+    length= False
+    capital= False
+    small= False
+    num= False
+    space= True
     while True:
         duplicate = False
         i = -1
@@ -49,16 +54,54 @@ def register():
         if not duplicate:
             break
         else:
+            os.system("cls")
             print("The username has been used by others.")
+            print()
             print("Please enter another one.")
-    pas = input("Enter a password: ")
+    while not(length and capital and small and num and space):
+        pas = str(input("Enter your password: "))
+        if len(pas) >= 8:
+            length= True
+        for i in range(0,len(pas)):
+            if pas[i] == " ":
+                space = False
+            if pas[i] >= "0" and pas[i] <= "9":
+                num=True
+            if pas[i] >="A" and pas[i] <= "Z":
+                capital= True
+            if pas[i] >="a" and pas[i] <= "z":
+                small= True
+        if length and capital and small and num and space:
+            os.system("cls")
+            print("Signup successful.")
+            print()
+            print("Please restart the program to login.")
+        else:
+            os.system("cls")
+            print("Here is/are the problem(s) of your password: ")
+            if not length:
+                print("At least 8 characters!")
+            if not capital:
+                print("At least 1 capital letter!")
+            if not small:
+                print("At least 1 small letter!")
+            if not num:
+                print("At least 1 number!")
+            if not space:
+                print("Should contain no space!")
+            length= False
+            capital= False
+            small= False
+            num= False
+            space= True
+            print("")
     f1 = open("username.txt", "a")
     f2 = open("password.txt", "a")
     f1.write("\n" + uname)
     f2.write("\n" + pas)
     f1.close()
     f2.close()
-    print("Please restart the program to login.")
+    
 #-----------------------------------------------------------------------------------------------------------------------------------
 def Login():
     global username, password
@@ -116,6 +159,16 @@ def schedule():
     class_ = input("                                                     Which class? ")
     date = input("                                                     Date(dd/mm/yyyy)? ")
     ass = input("                                                     What you want to schedule? ")
+    print()
+    print()
+    print()
+    print("(Esc).Back")
+    while True:
+        if msvcrt.kbhit():
+            char = msvcrt.getch().decode('utf-8') 
+            if char == chr(27):
+                return content()
+        
     
 #----------------------------------------------------------------------------------------------------------------------------------------
 def display():
@@ -130,5 +183,4 @@ def title():
     padded_text = text.center(120)
     print(padded_text)
     main_menu()
-#-----------------------------------------------------------------------------------------------------------------------------------------
 title()
