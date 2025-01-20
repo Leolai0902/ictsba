@@ -44,9 +44,12 @@ def register():
     num= False
     space= True
     while True:
+        print("                                                           <Signup>")
+        print()
+        print()
         duplicate = False
         i = -1
-        uname = input("Enter a username: ")
+        uname = input("                                                      Enter a username: ")
         while not duplicate and i < len(username) -1:
             i+= 1
             if uname == username[i]:
@@ -55,11 +58,13 @@ def register():
             break
         else:
             os.system("cls")
-            print("The username has been used by others.")
+            print("                                            The username has been used by others.")
             print()
-            print("Please enter another one.")
+            print("                                                  Please enter another one.")
+            print()
     while not(length and capital and small and num and space):
-        pas = str(input("Enter your password: "))
+        print()
+        pas = str(input("                                                      Enter your password: "))
         if len(pas) >= 8:
             length= True
         for i in range(0,len(pas)):
@@ -73,22 +78,28 @@ def register():
                 small= True
         if length and capital and small and num and space:
             os.system("cls")
-            print("Signup successful.")
+            print("                                                      Signup successful.")
             print()
-            print("Please restart the program to login.")
+            print("                                              Please restart the program to login.")
         else:
             os.system("cls")
-            print("Here is/are the problem(s) of your password: ")
+            print("                                             Here is/are the problem(s) of your password: ")
+            print()
             if not length:
-                print("At least 8 characters!")
+                print("                                                      At least 8 characters!")
+                print()
             if not capital:
-                print("At least 1 capital letter!")
+                print("                                                      At least 1 capital letter!")
+                print()
             if not small:
-                print("At least 1 small letter!")
+                print("                                                      At least 1 small letter!")
+                print()
             if not num:
-                print("At least 1 number!")
+                print("                                                      At least 1 number!")
+                print()
             if not space:
-                print("Should contain no space!")
+                print("                                                      Should contain no space!")
+                print()
             length= False
             capital= False
             small= False
@@ -109,15 +120,18 @@ def Login():
     os.system("cls")
     match = False
     while match == False:
+        print("                                                           <Login>")
+        print()
         i = 0
-        uname = input("                                                       Username:")
-        pas = input("                                                       Password:")
+        uname = input("                                                         Username: ")
+        print()
+        pas = input("                                                         Password: ")
         while not match and i <= len(username) -1: 
             if username[i] == uname and password[i] == pas:
                 match = True
             i += 1
         if match:
-            print()
+            os.system("cls")
             print("                                                Your login is successful.")
             print()
             print("                                                       Loading", end = "")
@@ -127,12 +141,14 @@ def Login():
             return content()
         else:
             os.system("cls")
-            print("                                                     Fail to login.")
+            print("                                                        Fail to login.")
             print()
         
 #---------------------------------------------------------------------------------------------------------------------------    
 def content():
      os.system("cls")
+     print("                                                             <Menu>")
+     print()
      print("                                                 (1).Schedule Assessments")
      print()
      print("                                                 (2).Display Assessments Scheduled")
@@ -155,12 +171,17 @@ def content():
 
 #---------------------------------------------------------------------------------------------------------------------------------------
 def schedule():
+    list = [[""] * 4 for i in range(6)]
+    for x in range(6):
+        for y in range(4):
+            list[x][y] = chr(65+y)
     os.system("cls")
-    class_ = input("                                                     Which class? ")
-    date = input("                                                     Date(dd/mm/yyyy)? ")
-    ass = input("                                                     What you want to schedule? ")
-    print()
-    print()
+    print("%64s" % "C L A S S")
+    for x in range(6):
+        print("                　　　　　　　　　　　      　  "" | ", end = "")
+        for y in range(4):
+            print(chr(ord("1") + x) + list[x][y] + " | ", end = "")
+        print("")
     print()
     print("(Esc).Back")
     while True:
@@ -168,6 +189,14 @@ def schedule():
             char = msvcrt.getch().decode('utf-8') 
             if char == chr(27):
                 return content()
+    class_ = input("                                                     Which class? ")
+    date = input("                                                     Date(dd/mm/yyyy)? ")
+    ass = input("                                                     What you want to schedule? ")
+    print()
+    print()
+    print()
+    
+    
         
     
 #----------------------------------------------------------------------------------------------------------------------------------------
