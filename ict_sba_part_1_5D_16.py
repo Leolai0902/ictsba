@@ -171,30 +171,37 @@ def content():
 
 #---------------------------------------------------------------------------------------------------------------------------------------
 def schedule():
+    iput = False
     list = [[""] * 4 for i in range(6)]
     for x in range(6):
         for y in range(4):
-            list[x][y] = chr(65+y)
+            list[x][y] = str(x+1)+str(chr(65+y))
     os.system("cls")
     print("%64s" % "C L A S S")
     for x in range(6):
         print("                　　　　　　　　　　　      　  "" | ", end = "")
         for y in range(4):
-            print(chr(ord("1") + x) + list[x][y] + " | ", end = "")
+            print(list[x][y] + " | ", end = "")
         print("")
     print()
-    print("(Esc).Back")
-    while True:
-        if msvcrt.kbhit():
-            char = msvcrt.getch().decode('utf-8') 
-            if char == chr(27):
-                return content()
-    class_ = input("                                                     Which class? ")
-    date = input("                                                     Date(dd/mm/yyyy)? ")
+    while iput == False:     
+        class_ = input("                                                     Which class(Big Letter)? ")
+        class_exist = False
+        for x in range(len(list)):
+            for y in range(len(list[x])):
+                if list[x][y] == class_:
+                    class_exist = True
+        if class_exist == False:
+            print("Wrong input!")
+        else:
+            iput = True
+            date = input("                                                     Date(dd/mm/yyyy)? ")
     ass = input("                                                     What you want to schedule? ")
     print()
     print()
     print()
+
+    
     
     
         
