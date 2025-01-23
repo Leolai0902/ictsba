@@ -1,5 +1,8 @@
 import msvcrt
 import os, time, sys
+import calendar
+from colorama import  Fore, Style #change colour
+
 
 
 
@@ -168,34 +171,67 @@ def content():
             elif char == chr(27):
                 os.system("cls")
                 return title()
-
-#---------------------------------------------------------------------------------------------------------------------------------------
-def schedule():
-    iput = False
-    list = [[""] * 4 for i in range(6)]
+#-------------------------------------------------------------------------------------------------------------
+def a():
+    classlist = [[""] * 4 for i in range(6)]
     for x in range(6):
         for y in range(4):
-            list[x][y] = str(x+1)+str(chr(65+y))
-    os.system("cls")
+            classlist[x][y] = str(x+1)+str(chr(65+y))
     print("%64s" % "C L A S S")
     for x in range(6):
         print("                　　　　　　　　　　　      　  "" | ", end = "")
         for y in range(4):
-            print(list[x][y] + " | ", end = "")
+            print(classlist[x][y] + " | ", end = "")
         print("")
     print()
-    while iput == False:     
-        class_ = input("                                                     Which class(Big Letter)? ")
+    return classlist
+    
+#---------------------------------------------------------------------------------------------------------------------------------------
+def schedule():
+    iput = False
+    os.system("cls")
+    while iput == False:
+        classlist = a()
+        class_ = input("                                                Which class(Big Letter)? ")
         class_exist = False
-        for x in range(len(list)):
-            for y in range(len(list[x])):
-                if list[x][y] == class_:
+        for x in range(len(classlist)):
+            for y in range(len(classlist[x])):
+                if classlist[x][y] == class_:
                     class_exist = True
         if class_exist == False:
-            print("Wrong input!")
+            os.system("cls")
+            
+            print("                                                      "+Fore.RED + "Wrong input!")
+            print(Style.RESET_ALL)
         else:
             iput = True
-            date = input("                                                     Date(dd/mm/yyyy)? ")
+            n = 1
+            d = 1
+            yy = 2025
+            while True:
+                os.system("cls")
+                print(calendar.month(yy, n))
+                print()
+                print()
+                print()
+                print()
+                print("(LEFT)A")
+                print(d)
+                print(n)
+                while True:
+                   if msvcrt.kbhit():
+                        char = msvcrt.getch().decode('utf-8')
+                        if char == "w" or char == "W":
+                            n += 1
+                        elif char == "s" or char == "S":
+                            n = n - 1
+                            
+                        elif char == "a" or char == "A":
+                            d -= 1
+                        elif char == "d" or char == "D":
+                            d += 1
+                        break
+                        
     ass = input("                                                     What you want to schedule? ")
     print()
     print()
