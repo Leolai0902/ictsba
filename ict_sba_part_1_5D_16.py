@@ -177,9 +177,9 @@ def a():
     for x in range(6):
         for y in range(4):
             classlist[x][y] = str(x+1)+str(chr(65+y))
-    print("%64s" % "C L A S S")
+    print("%68s" % "C L A S S")
     for x in range(6):
-        print("                　　　　　　　　　　　      　  "" | ", end = "")
+        print("                　　　　　　　　 　　　         　  "" | ", end = "")
         for y in range(4):
             print(classlist[x][y] + " | ", end = "")
         print("")
@@ -192,7 +192,7 @@ def schedule():
     os.system("cls")
     while iput == False:
         classlist = a()
-        class_ = input("                                                Which class(Big Letter)? ")
+        class_ = input("                                                    Which class(Big Letter)? ")
         class_exist = False
         for x in range(len(classlist)):
             for y in range(len(classlist[x])):
@@ -207,28 +207,32 @@ def schedule():
             iput = True
             n = 1
             d = 1
-            yy = 2025
+            yyyy = 2025
             while True:
                 os.system("cls")
-                print(calendar.month(yy, n))
+                print(calendar.month(yyyy, n))
                 print()
                 print()
                 print()
+                print("                                                         (NEXT MONTH)W")
                 print()
-                print("(LEFT)A")
+                print("                                       (PREVIOUS DATE)A                 (NEXT DATE)D")
+                print()
+                print("                                                       (PREVIOUS MONTH)S")
                 print(d)
                 print(n)
                 while True:
                    if msvcrt.kbhit():
                         char = msvcrt.getch().decode('utf-8')
-                        if char == "w" or char == "W":
+                        if (char == "w" or char == "W") and n!= 12:
                             n += 1
-                        elif char == "s" or char == "S":
+                            d = 1
+                        elif (char == "s" or char == "S") and n!= 1:
                             n = n - 1
-                            
-                        elif char == "a" or char == "A":
+                            d = 1
+                        elif (char == "a" or char == "A") and d!= 1:
                             d -= 1
-                        elif char == "d" or char == "D":
+                        elif (char == "d" or char == "D") and  ((d == 1 and d ==3 and d == 5 and d ==7 and d ==8 and d ==10 and d ==12) or d!= 31) and (d ==2 or d !=28):
                             d += 1
                         break
                         
