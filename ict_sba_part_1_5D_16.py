@@ -158,7 +158,7 @@ def content():
      print()
      print("                                                 (3).Schedule Record")
      print()
-     print("                                                 (Esc).Back")
+     print("                                                 (Esc).Logout")
      while True:
        if msvcrt.kbhit():
             char = msvcrt.getch().decode('utf-8') 
@@ -205,12 +205,12 @@ def schedule():
             print(Style.RESET_ALL)
         else:
             iput = True
-            n = 1
+            m = 1
             d = 1
             yyyy = 2025
             while True:
                 os.system("cls")
-                print(calendar.month(yyyy, n))
+                print(calendar.month(yyyy, m))
                 print()
                 print()
                 print()
@@ -219,27 +219,30 @@ def schedule():
                 print("                                       (PREVIOUS DATE)A                 (NEXT DATE)D")
                 print()
                 print("                                                       (PREVIOUS MONTH)S")
-                print(d)
-                print(n)
+                print("Month: "+str(m))
+                print("Date: "+str(d))
+                print("Press <ENTER> to comfirm.")
                 while True:
                    if msvcrt.kbhit():
                         char = msvcrt.getch().decode('utf-8')
-                        if (char == "w" or char == "W") and n!= 12:
-                            n += 1
+                        if (char == "w" or char == "W") and m!= 12:
+                            m += 1
                             d = 1
-                        elif (char == "s" or char == "S") and n!= 1:
-                            n = n - 1
+                        elif (char == "s" or char == "S") and m!= 1:
+                            m = m - 1
                             d = 1
                         elif (char == "a" or char == "A") and d!= 1:
                             d -= 1
-                        elif (char == "d" or char == "D") and  ((d == 1 and d ==3 and d == 5 and d ==7 and d ==8 and d ==10 and d ==12) or d!= 31) and (d ==2 or d !=28):
+                        elif (char == "d" or char == "D") and (((m == 1 or m == 3 or m == 5 or m == 7 or m == 8 or m == 10 or m == 12) and d != 31) or ((m == 2) and d != 28) or (m == 4 or m == 6 or m == 9 or m == 11) and d != 30 ):
                             d += 1
                         break
-                        
-    ass = input("                                                     What you want to schedule? ")
-    print()
-    print()
-    print()
+                if char == chr(13):
+                    os.system("cls")    
+                    ass = input("                                                     What you want to schedule? ")
+                    print()
+                    print()
+                    print()
+                    
 
     
     
@@ -249,7 +252,26 @@ def schedule():
 #----------------------------------------------------------------------------------------------------------------------------------------
 def display():
     os.system("cls")
-    check = input("                                              Which class you want to check? ")
+    iput = False
+    os.system("cls")
+    while iput == False:
+        classlist = a()
+        check = input("                                              Which class you want to check?(Big Letter) ")
+        class_exist = False
+        for x in range(len(classlist)):
+            for y in range(len(classlist[x])):
+                if classlist[x][y] == check:
+                    class_exist = True
+        if class_exist == False:
+            os.system("cls")
+            
+            print("                                                      "+Fore.RED + "Wrong input!")
+            print(Style.RESET_ALL)
+        else:
+            print()
+    
+    
+            
 #----------------------------------------------------------------------------------------------------------------------------------------
 def record():
     os.system("cls")
