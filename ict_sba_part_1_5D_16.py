@@ -1,13 +1,15 @@
 import msvcrt
 import os, time, sys
 import calendar
+import maskpass
 from colorama import  Fore, Style #change colour
+from datetime import datetime, date
 
 
 
 
 
-
+#----------------------------------------------------------------------------------------------------------------------------------------------------
 def main_menu():
     print()
     print("                                                       (1).Login")
@@ -118,7 +120,7 @@ def register():
     
 #-----------------------------------------------------------------------------------------------------------------------------------
 def Login():
-    global username, password
+    global username, password, uname
     username, password = getData()
     os.system("cls")
     match = False
@@ -128,7 +130,7 @@ def Login():
         i = 0
         uname = input("                                                         Username: ")
         print()
-        pas = input("                                                         Password: ")
+        pas = maskpass.askpass(prompt="                                                         Password: ", mask="*")
         while not match and i <= len(username) -1: 
             if username[i] == uname and password[i] == pas:
                 match = True
@@ -188,11 +190,13 @@ def a():
     
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def schedule():
+    global m, d, class_
     iput = False
     os.system("cls")
     while iput == False:
         classlist = a()
-        class_ = input("                                                    Which class(Big Letter)? ")
+        class_ = input("                                                          Which class? ")
+        class_ = class_.upper()
         class_exist = False
         for x in range(len(classlist)):
             for y in range(len(classlist[x])):
@@ -201,7 +205,7 @@ def schedule():
         if class_exist == False:
             os.system("cls")
             
-            print("                                                      "+Fore.RED + "Wrong input!")
+            print("                                                          "+Fore.RED + "Wrong input!")
             print(Style.RESET_ALL)
         else:
             iput = True
@@ -237,18 +241,79 @@ def schedule():
                             d += 1
                         break
                 if char == chr(13):
-                    os.system("cls")    
-                    ass = input("                                                     What you want to schedule? ")
-                    print()
-                    print()
-                    print()
-                    
+                    return subject()
 
-    
-    
-    
-        
-    
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def subject_list():
+    global q
+    os.system("cls")
+    f3 = open("subject.txt", "r")
+    q = f3.readlines()
+    for p in range(len(q)):
+        q[p] = q[p].strip()
+    f3.close()
+    for j in range(4):
+        print("           　　　　　　　　 　　　         　  ", end = "")
+        for k in range(4):
+            print("\t" + q[j*4 + k], end = " ")
+        print()
+    print()
+#---------------------------------------------------------------------------------------------------------------------------------------------------------
+def subject():
+    global assessment
+    OK = False
+    subject_list()
+    while OK == False:
+        assessment = input("           　　　　  　　　　 　   　　            　   What subject? ")
+        assessment = assessment.upper()
+        found_result = search(assessment)
+        if  found_result:
+            OK = True
+            print("           　　　　  　　　　 　   　　            　   Loading", end = "")
+            for x in range(15):
+                print(".", end = "",flush = True)
+                time.sleep(0.1)
+            os.system("cls")
+            txt_record()
+            print("           　　　　  　　　　 　   　　          Assessment scheduled.")
+            print()
+            print("           　　　　  　　　　 　   　　          Press <ENTER> to back to menu.")
+            while True:
+                if msvcrt.kbhit():
+                        char = msvcrt.getch().decode('utf-8')
+                        if char == chr(13):
+                            return content()
+        else:
+            print("           　　　　  　　　　 　   　　            　   Loading", end = "")
+            for x in range(15):
+                print(".", end = "",flush = True)
+                time.sleep(0.1)
+            print()
+            os.system("cls")
+            subject_list()
+            print("           　　　　  　　　　 　   　　            　   "+Fore.RED + "Wrong input!")
+            print(Style.RESET_ALL)
+            print("           　　　　  　　　　 　   　　            　   Input agian.")
+            print()
+    return q
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def txt_record():
+    global class_, assessment, m, d, uname
+    time = datetime.now().time().strftime("%X")
+    date = datetime.now().date()
+    f4 = open("record.txt","a")
+    f4.write("\n" + str(date) + " " + str(time) + " " + str(class_) + " " + str(m) +"-"+str(d) + " " + str(assessment) + " " + str(uname))
+    f4.close()
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def search(ass):
+    global q
+    x = 0
+    found = False
+    while not (found) and x < len(q):
+        if ass == q[x]:
+            found = True
+        x += 1
+    return found   
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def display():
     os.system("cls")
@@ -256,25 +321,43 @@ def display():
     os.system("cls")
     while iput == False:
         classlist = a()
-        check = input("                                              Which class you want to check?(Big Letter) ")
+        check = input("                                              Which class you want to check? ")
+        check = check.upper()
         class_exist = False
         for x in range(len(classlist)):
             for y in range(len(classlist[x])):
                 if classlist[x][y] == check:
                     class_exist = True
         if class_exist == False:
-            os.system("cls")
-            
+            os.system("cls") 
             print("                                                      "+Fore.RED + "Wrong input!")
             print(Style.RESET_ALL)
         else:
             print()
     
-    
             
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def record():
     os.system("cls")
+    f4 = open("record.txt", "r")
+    g = f4.readlines()
+    for x in range(len(g)):
+        g[x] = g[x].strip()
+    f4.close()
+    print("                                                          RECORD")
+    for y in range(len(g)):
+        print ("                                              " + g[y])
+    print()
+    print()
+    print()
+    print("                                                      <ESC>Back To Menu")
+    while True:
+        if msvcrt.kbhit():
+            char = msvcrt.getch().decode('utf-8')
+            if char == chr(27):
+                return content()
+        
+        
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def reset():
     print()
