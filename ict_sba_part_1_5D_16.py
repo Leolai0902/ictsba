@@ -28,7 +28,7 @@ def main_menu():
                 os.system("cls")
                 sys.exit(0)
 #--------------------------------------------------------------------------------------------------------------------------------
-def getData():
+def getData_login():
     f1 = open("username.txt", "r")
     f2 = open("password.txt", "r")
     u = f1.readlines()
@@ -41,7 +41,7 @@ def getData():
     return u , p
 #-------------------------------------------------------------------------------------------------------------------------------
 def register():
-    username, password = getData()
+    username, password = getData_login()
     os.system("cls")
     length= False
     capital= False
@@ -121,7 +121,7 @@ def register():
 #-----------------------------------------------------------------------------------------------------------------------------------
 def Login():
     global username, password, uname
-    username, password = getData()
+    username, password = getData_login()
     os.system("cls")
     match = False
     while match == False:
@@ -316,6 +316,7 @@ def search(ass):
     return found   
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def display():
+    global g, check
     os.system("cls")
     iput = False
     os.system("cls")
@@ -330,20 +331,63 @@ def display():
                     class_exist = True
         if class_exist == False:
             os.system("cls") 
-            print("                                                      "+Fore.RED + "Wrong input!")
-            print(Style.RESET_ALL)
+            print("                                                      "+Fore.RED + "Wrong input!" + Style.RESET_ALL)
         else:
-            print()
+            iput = True
+            f4 = open("record.txt", "r")
+            g = f4.readlines()
+            for y in range(len(g)):
+                g[y] = g[y].replace("\n", "")
+            f4.close()
+            bubble_sort(g)
+            linear_search(check , g)
+    print()
+    print()
+    print()
+    print("                                                      <ESC>Back To Menu")
+    while True:
+        if msvcrt.kbhit():
+            try:
+                char = msvcrt.getch().decode('utf-8')
+                if char == chr(27):
+                    return content()
+            except UnicodeDecodeError:
+                pass
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def bubble_sort(arr):
+    for i in range(len(arr)):
+        for j in range(len(arr) - 1 - i):
+            if arr[j] > arr[j +1]:
+                swap(j , j + 1, arr)
+                
+#-------------------------------------------------------------------------------------------------------------------------------------
+def swap(a, b, arr2):
+    temp = arr2[a]
+    arr2[a] = arr2[b]
+    arr2[b] = temp
     
-            
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def linear_search(c,l):
+    x = 0
+    found = False
+    while x < len(l):
+        index = l[x].find(c)
+        if index != -1:
+            found = True
+            print(l[x])
+        x = x + 1
+    if found == False:
+        print("No result!")
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def record():
+    global g
     os.system("cls")
     f4 = open("record.txt", "r")
     g = f4.readlines()
     for x in range(len(g)):
         g[x] = g[x].strip()
     f4.close()
+    
     print("                                                          RECORD")
     for y in range(len(g)):
         print ("                                              " + g[y])
@@ -353,10 +397,13 @@ def record():
     print("                                                      <ESC>Back To Menu")
     while True:
         if msvcrt.kbhit():
-            char = msvcrt.getch().decode('utf-8')
-            if char == chr(27):
-                return content()
-        
+            try:
+                char = msvcrt.getch().decode('utf-8')
+                if char == chr(27):
+                    return content()
+            except UnicodeDecodeError:
+                pass
+                
         
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def reset():
