@@ -146,8 +146,11 @@ def Login():
         while not all_match and i <= len(username) -1:
             u_match = False
             p_match = False
-            all_wrong =False
-            if username[i] == uname and password[i] == pas:
+            all_wrong = False
+            ad_match = False
+            if uname == "Admin" and pas == "1":
+                ad_match = True
+            elif username[i] == uname and password[i] == pas:
                 all_match = True
             elif username[i] == uname and password[i] != pas:
                 u_match = True
@@ -156,7 +159,16 @@ def Login():
             else:
                 all_wrong =True
             i += 1
-        if all_match:
+        if ad_match:
+            os.system("cls")
+            print("                                                Your login is successful.")
+            print()
+            print("                                                       Loading", end = "")
+            for x in range(15):
+                print(".", end = "",flush = True)
+                time.sleep(0.1)
+            return admin_content()
+        elif all_match:
             os.system("cls")
             print("                                                Your login is successful.")
             print()
@@ -199,6 +211,24 @@ def content():
                 return display()
             elif char == "3":
                 return record()
+            elif char == chr(27):
+                os.system("cls")
+                return title()
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def admin_content():
+    os.system("cls")
+    print("                                                         <Admin Menu>")
+    print()
+    print("                                               (1).Delete Assessments Scheduled")
+    print()
+    print("                                               (2).")
+    print()
+    print("                                                (Esc).Logout")
+    while True:
+       if msvcrt.kbhit():
+            char = msvcrt.getch().decode('utf-8') 
+            if char == "1":
+                return delete()
             elif char == chr(27):
                 os.system("cls")
                 return title()
@@ -435,7 +465,7 @@ def record():
                 
         
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-def reset():
+def delete():
     print()
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def title():
