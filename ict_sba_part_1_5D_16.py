@@ -221,14 +221,20 @@ def admin_content():
     print()
     print("                                               (1).Delete Assessments Scheduled")
     print()
-    print("                                               (2).")
+    print("                                               (2).Schedule Assessments")
     print()
-    print("                                                (Esc).Logout")
+    print("                                               (3).Delete Account")
+    print()
+    print("                                               (Esc).Logout")
     while True:
        if msvcrt.kbhit():
             char = msvcrt.getch().decode('utf-8') 
             if char == "1":
                 return delete()
+            elif char == "2":
+                return schedule()
+            elif char == "3":
+                return del_ac()
             elif char == chr(27):
                 os.system("cls")
                 return title()
@@ -254,7 +260,7 @@ def schedule():
     os.system("cls")
     while iput == False:
         classlist = a()
-        class_ = input("                                                          Which class? ")
+        class_ = input("                                                          Which class? ").strip()
         class_ = class_.upper()
         class_exist = False
         for x in range(len(classlist)):
@@ -284,7 +290,7 @@ def schedule():
                 print("                                                       (PREVIOUS MONTH)S")
                 print("Month: "+str(m))
                 print("Date: "+str(d))
-                print("Press <ENTER> to comfirm.")
+                print("Press <ENTER> to confirm.")
                 while True:
                    if msvcrt.kbhit():
                         char = msvcrt.getch().decode('utf-8')
@@ -323,7 +329,7 @@ def subject():
     OK = False
     subject_list()
     while OK == False:
-        assessment = input("           　　　　  　　　　 　   　　            　   What subject? ")
+        assessment = input("           　　　　  　　　　 　   　　            　   What subject? ").strip()
         assessment = assessment.upper()
         found_result = search(assessment)
         if  found_result:
@@ -381,7 +387,7 @@ def display():
     os.system("cls")
     while iput == False:
         classlist = a()
-        check = input("                                              Which class you want to check? ")
+        check = input("                                              Which class you want to check? ").strip()
         check = check.upper()
         class_exist = False
         for x in range(len(classlist)):
@@ -448,8 +454,10 @@ def record():
     f4.close()
     
     print("                                                          RECORD")
+    print()
+    print("                                              SCHEDULE DATE CLASS    ASSESSMENT DATE    SUBJECT      TEACHER       ")
     for y in range(len(g)):
-        print ("                                              " + g[y])
+        print("                                              " + g[y])
     print()
     print()
     print()
@@ -462,10 +470,52 @@ def record():
                     return content()
             except UnicodeDecodeError:
                 pass
-                
-        
+
+
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def delete():
+    global g
+    os.system("cls")
+    f4 = open("record.txt", "r")
+    g = f4.readlines()
+    for x in range(len(g)):
+        g[x] = g[x].strip()
+    f4.close()
+    n = 0
+    print("                                                            Delete")
+    print()
+    os.system("cls")
+    for i in range(len(g)):
+        n += 1
+        print("                                             " + str(n) + "." + g[i])
+    print()
+    correct = False
+    while correct == False:
+        num = int(input("                                             Which record do you want to delete? ")).strip()
+        if num < 1:
+            print("                                                        "+Fore.RED +"Wrong input!" + Style.RESET_ALL)
+        elif num > len(g):
+            print("                                                     "+Fore.RED +"Index out of range!" + Style.RESET_ALL)
+        else:
+            correct = True
+            print(g[num-1])
+            g[num -1] = g[num -1]
+            os.system("cls")
+            print("                                                   Record deleted!")
+            print()
+            print()
+            print()
+            print("                                                   <ESC>Back To Menu")
+        while True:
+            if msvcrt.kbhit():
+                try:
+                    char = msvcrt.getch().decode('utf-8')
+                    if char == chr(27):
+                        return admin_content()
+                except UnicodeDecodeError:
+                    pass
+##------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def del_ac():
     print()
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def title():
