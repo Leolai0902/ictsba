@@ -415,6 +415,7 @@ def display():
     iput = False
     os.system("cls")
     while iput == False:
+<<<<<<< HEAD
         print("                                              What you want to check? ")
         print()
         print("                                                  1.Assessment")
@@ -482,6 +483,28 @@ def display():
     f4.close()
     bubble_sort(g)
     linear_search(check , g)
+=======
+        classlist = a()
+        check = input("                                              Which class you want to check? ").strip()
+        check = check.upper()
+        class_exist = False
+        for x in range(len(classlist)):
+            for y in range(len(classlist[x])):
+                if classlist[x][y] == check:
+                    class_exist = True
+        if class_exist == False:
+            os.system("cls") 
+            print("                                                      "+Fore.RED + "Wrong input!" + Style.RESET_ALL)
+        else:
+            iput = True
+            f4 = open("record.txt", "r")
+            g = f4.readlines()
+            for y in range(len(g)):
+                g[y] = g[y].replace("\n", "")
+            f4.close()
+            bubble_sort(g)
+            linear_search(check , g)
+>>>>>>> f31ce46ee833d95beb78292ff37882fc2a8b189f
     print()
     print()
     print()
@@ -526,6 +549,7 @@ def record():
         g[x] = g[x].strip()
     f4.close()
     
+<<<<<<< HEAD
     print("                                                           RECORD")
     print()
     print("                       SCHEDULE DATE         CLASS     ASSESSMENT DATE     SUBJECT           TEACHER       ")
@@ -533,15 +557,31 @@ def record():
     for y in range(len(g)):
         print("                    " + g[y])
         print("                    --------------------------------------------------------------------------------     ")
+=======
+    print("                                                          RECORD")
+    print()
+    print("                                              SCHEDULE DATE CLASS    ASSESSMENT DATE    SUBJECT      TEACHER       ")
+    for y in range(len(g)):
+        print("                                              " + g[y])
+>>>>>>> f31ce46ee833d95beb78292ff37882fc2a8b189f
     print()
     print()
     print()
     print("                                                      <ESC>Back To Menu")
     while True:
         if msvcrt.kbhit():
+<<<<<<< HEAD
             char = msvcrt.getwch()
             if char == chr(27):
                 return content()
+=======
+            try:
+                char = msvcrt.getch().decode('utf-8')
+                if char == chr(27):
+                    return content()
+            except UnicodeDecodeError:
+                pass
+>>>>>>> f31ce46ee833d95beb78292ff37882fc2a8b189f
 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -580,9 +620,18 @@ def delete():
             print("                                                   <ESC>Back To Menu")
         while True:
             if msvcrt.kbhit():
+<<<<<<< HEAD
                 char = msvcrt.getwch()
                 if char == chr(27):
                     return admin_content()
+=======
+                try:
+                    char = msvcrt.getch().decode('utf-8')
+                    if char == chr(27):
+                        return admin_content()
+                except UnicodeDecodeError:
+                    pass
+>>>>>>> f31ce46ee833d95beb78292ff37882fc2a8b189f
 ##------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def del_ac():
     print()
