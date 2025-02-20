@@ -225,6 +225,8 @@ def admin_content():
     print()
     print("                                               (3).Delete Account")
     print()
+    print("                                               (4).Change Password")
+    print()
     print("                                               (Esc).Logout")
     while True:
        if msvcrt.kbhit():
@@ -235,6 +237,8 @@ def admin_content():
                 return schedule()
             elif char == "3":
                 return del_ac()
+            elif char == "4":
+                return pas_change
             elif char == chr(27):
                 os.system("cls")
                 return title()
