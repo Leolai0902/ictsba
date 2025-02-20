@@ -434,10 +434,10 @@ def display():
                         if char == "1":
                             choosen = True
                             os.system("cls")
-                            print("1.Dictation")
-                            print("2.Quiz")
-                            print("3.Test")
-                            print("4.Exam")
+                            print("                                                  1.Dictation")
+                            print("                                                  2.Quiz")
+                            print("                                                  3.Test")
+                            print("                                                  4.Exam")
                             while True:
                                 if msvcrt.kbhit():
                                     char = msvcrt.getwch()
@@ -450,6 +450,7 @@ def display():
                                     elif char == "4":
                                         check = "Exam"
                                     return result()
+
                         elif char == "2":
                             choosen = True
                             classlist = a()
@@ -469,11 +470,78 @@ def display():
                                 else:
                                     iput = True
                                     return result()
+
                         elif char == "3":
-                            os.system("cls")
-                            print()
-                            
                             choosen = True
+                            os.system("cls")
+                            print("                                                  1.Specific Date")
+                            print("                                                  2.Month")
+                            while True:
+                                if msvcrt.kbhit():
+                                    char = msvcrt.getwch()
+                                    if char == "1":
+                                        m = 1
+                                        d = 1
+                                        while True:
+                                            os.system("cls")
+                                            print()
+                                            print()
+                                            print()
+                                            print("                                                         (NEXT MONTH)W")
+                                            print()
+                                            print("                                       (PREVIOUS DATE)A                 (NEXT DATE)D")
+                                            print()
+                                            print("                                                       (PREVIOUS MONTH)S")
+                                            print("Month: "+str(m))
+                                            print("Date: "+str(d))
+                                            print("Press <ENTER> to confirm.")
+                                            while True:
+                                                if msvcrt.kbhit():
+                                                    char = msvcrt.getwch()
+                                                    if (char == "w" or char == "W") and m!= 12:
+                                                        m += 1
+                                                        d = 1
+                                                    elif (char == "s" or char == "S") and m!= 1:
+                                                        m = m - 1
+                                                        d = 1
+                                                    elif (char == "a" or char == "A") and d!= 1:
+                                                        d -= 1
+                                                    elif (char == "d" or char == "D") and (((m == 1 or m == 3 or m == 5 or m == 7 or m == 8 or m == 10 or m == 12) and d != 31) or ((m == 2) and d != 28) or (m == 4 or m == 6 or m == 9 or m == 11) and d != 30 ):
+                                                        d += 1
+                                                    break
+                                            if char == chr(13):
+                                                check = str(m) +"-" + str(d)
+                                                return result()
+                                    elif char == "2":
+                                        m = 1
+                                        while True:
+                                            os.system("cls")
+                                            print()
+                                            print()
+                                            print()
+                                            print("                                                         (NEXT MONTH)W")
+                                            print()
+                                            print()
+                                            print()
+                                            print("                                                       (PREVIOUS MONTH)S")
+                                            print("Month: "+str(m))
+                                            print("Press <ENTER> to confirm.")
+                                            while True:
+                                                if msvcrt.kbhit():
+                                                    char = msvcrt.getwch()
+                                                    if (char == "w" or char == "W") and m!= 12:
+                                                        m += 1
+                                                    elif (char == "s" or char == "S") and m!= 1:
+                                                        m = m - 1
+                                                    break
+                                            if char == chr(13):
+                                                check = str(m)
+                                                return result()
+                                            
+                                        
+                            
+                            
+                            
                         elif char == "4":
                             choosen = True
                             subject_list()
@@ -492,10 +560,27 @@ def display():
                                                
                             
                         elif char == "5":
-                            os.system("cls")
-                            print()
-                            
                             choosen = True
+                            f = open("username.txt", "r")
+                            username = f.readlines()
+                            for x in range(len(username)):
+                                username[x] = username[x].strip()
+                            f.close()
+                            os.system("cls")
+                            exist = False
+                            while exist == False:
+                                i = 0
+                                check = input("                                                Which teacher(Username)? ").strip()
+                                while i <= len(username) -1:
+                                    if username[i] == check:
+                                        exist = True
+                                        return result()
+                                    else:
+                                        os.system("cls") 
+                                        print("                                                      "+Fore.RED + "Not exist!" + Style.RESET_ALL)
+                                    i += 1
+                            
+                            
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def result():
     global check,g
@@ -506,6 +591,7 @@ def result():
     for y in range(len(g)):
          g[y] = g[y].replace("\n", "")
     f4.close()
+    print("                       SCHEDULE DATE         CLASS     ASSESSMENT DATE     SUBJECT           TEACHER       ")
     bubble_sort(g)
     linear_search(check , g)
     print()
@@ -538,10 +624,13 @@ def linear_search(c,l):
         index = l[x].find(c)
         if index != -1:
             found = True
-            print(l[x])
+            print("                    --------------------------------------------------------------------------------     ")
+            print("                    " + l[x])
         x = x + 1
     if found == False:
-        print("No result!")
+        os.system("cls")
+        print("Result: ")
+        print("                                                      "+Fore.RED + "No result!" + Style.RESET_ALL)
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def record():
     global g
