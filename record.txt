@@ -1,7 +1,4 @@
-2025-02-18 22:28:21       1A             5-10         M2 Test	A
-2025-02-18 22:29:24       1A             7-12         M2 Dictation			A
-2025-02-18 22:29:33       1A             7-10         M2 Test			A
-2025-02-18 22:29:57       1A             3-10       CHIN Dictation			A
-2025-02-18 22:30:23       1A             6-8       CHIN Dictation	A
-2025-02-18 22:30:50       1A             1-20         M2 Dictation		A
-2025-02-18 22:31:10       1A             8-10         M2 Exam		A
+2025-02-20 14:38:02       1D             1-1         M2 Exam		Admin
+2025-02-20 14:40:02       1A             1-1         M2 Dictation		Admin
+2025-02-20 14:40:36       1A             1-1         M2 Dictation		Admin
+2025-02-20 14:40:47       1A             1-1         M2 Dictation		A

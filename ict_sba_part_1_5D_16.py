@@ -269,7 +269,6 @@ def schedule():
                     class_exist = True
         if class_exist == False:
             os.system("cls")
-            
             print("                                                          "+Fore.RED + "Wrong input!")
             print(Style.RESET_ALL)
         else:
@@ -325,7 +324,7 @@ def subject_list():
     print()
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def subject():
-    global assessment, work
+    global assessment, work, uname
     OK = False
     subject_list()
     while OK == False:
@@ -375,8 +374,10 @@ def subject():
             while True:
                 if msvcrt.kbhit():
                         char = msvcrt.getwch()
-                        if char == chr(13):
+                        if char == chr(13) and uname != "Admin":
                             return content()
+                        else:
+                            return admin_content()
         else:
             print("           　　　　  　　　　 　   　　            　   Loading", end = "")
             for x in range(15):
@@ -410,12 +411,11 @@ def search(ass):
     return found   
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def display():
-    global g, check
+    global check
     os.system("cls")
     iput = False
     os.system("cls")
     while iput == False:
-<<<<<<< HEAD
         print("                                              What you want to check? ")
         print()
         print("                                                  1.Assessment")
@@ -441,6 +441,15 @@ def display():
                             while True:
                                 if msvcrt.kbhit():
                                     char = msvcrt.getwch()
+                                    if char == "1":
+                                        check = "Dictation"
+                                    elif char == "2":
+                                        check = "Quiz"
+                                    elif char == "3":
+                                        check = "Test"
+                                    elif char == "4":
+                                        check = "Exam"
+                                    return result()
                         elif char == "2":
                             choosen = True
                             classlist = a()
@@ -459,21 +468,37 @@ def display():
                                     print("                                                      "+Fore.RED + "Wrong input!" + Style.RESET_ALL)
                                 else:
                                     iput = True
+                                    return result()
                         elif char == "3":
                             os.system("cls")
                             print()
                             
                             choosen = True
                         elif char == "4":
-                            os.system("cls")
-                            print()
-                            
                             choosen = True
+                            subject_list()
+                            os.system("cls")
+                            iput = False
+                            while iput == False:
+                                check = input("                                              Which subject? ").strip()
+                                check = check.upper()
+                                found_result = search(check)
+                                if not found_result:
+                                    os.system("cls") 
+                                    print("                                                      "+Fore.RED + "Wrong input!" + Style.RESET_ALL)
+                                else:
+                                    iput = True
+                                    return result()
+                                               
+                            
                         elif char == "5":
                             os.system("cls")
                             print()
                             
                             choosen = True
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def result():
+    global check,g
     os.system("cls")
     print("Result:")
     f4 = open("record.txt", "r")
@@ -483,28 +508,6 @@ def display():
     f4.close()
     bubble_sort(g)
     linear_search(check , g)
-=======
-        classlist = a()
-        check = input("                                              Which class you want to check? ").strip()
-        check = check.upper()
-        class_exist = False
-        for x in range(len(classlist)):
-            for y in range(len(classlist[x])):
-                if classlist[x][y] == check:
-                    class_exist = True
-        if class_exist == False:
-            os.system("cls") 
-            print("                                                      "+Fore.RED + "Wrong input!" + Style.RESET_ALL)
-        else:
-            iput = True
-            f4 = open("record.txt", "r")
-            g = f4.readlines()
-            for y in range(len(g)):
-                g[y] = g[y].replace("\n", "")
-            f4.close()
-            bubble_sort(g)
-            linear_search(check , g)
->>>>>>> f31ce46ee833d95beb78292ff37882fc2a8b189f
     print()
     print()
     print()
@@ -548,8 +551,6 @@ def record():
     for x in range(len(g)):
         g[x] = g[x].strip()
     f4.close()
-    
-<<<<<<< HEAD
     print("                                                           RECORD")
     print()
     print("                       SCHEDULE DATE         CLASS     ASSESSMENT DATE     SUBJECT           TEACHER       ")
@@ -557,31 +558,15 @@ def record():
     for y in range(len(g)):
         print("                    " + g[y])
         print("                    --------------------------------------------------------------------------------     ")
-=======
-    print("                                                          RECORD")
-    print()
-    print("                                              SCHEDULE DATE CLASS    ASSESSMENT DATE    SUBJECT      TEACHER       ")
-    for y in range(len(g)):
-        print("                                              " + g[y])
->>>>>>> f31ce46ee833d95beb78292ff37882fc2a8b189f
     print()
     print()
     print()
     print("                                                      <ESC>Back To Menu")
     while True:
         if msvcrt.kbhit():
-<<<<<<< HEAD
             char = msvcrt.getwch()
             if char == chr(27):
                 return content()
-=======
-            try:
-                char = msvcrt.getch().decode('utf-8')
-                if char == chr(27):
-                    return content()
-            except UnicodeDecodeError:
-                pass
->>>>>>> f31ce46ee833d95beb78292ff37882fc2a8b189f
 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -594,16 +579,19 @@ def delete():
         g[x] = g[x].strip()
     f4.close()
     n = 0
+    os.system("cls")
     print("                                                            Delete")
     print()
-    os.system("cls")
+    print("                       SCHEDULE DATE         CLASS     ASSESSMENT DATE     SUBJECT           TEACHER       ")
+    print()
     for i in range(len(g)):
         n += 1
-        print("                                             " + str(n) + "." + g[i])
+        print("                    " + str(n) + "." + g[i])
+        print("                    --------------------------------------------------------------------------------     ")
     print()
     correct = False
-    while correct == False:
-        num = int(input("                                             Which record do you want to delete? ")).strip()
+    while not correct:
+        num = int(input("                                             Which record do you want to delete? "))
         if num < 1:
             print("                                                        "+Fore.RED +"Wrong input!" + Style.RESET_ALL)
         elif num > len(g):
@@ -620,18 +608,9 @@ def delete():
             print("                                                   <ESC>Back To Menu")
         while True:
             if msvcrt.kbhit():
-<<<<<<< HEAD
                 char = msvcrt.getwch()
                 if char == chr(27):
                     return admin_content()
-=======
-                try:
-                    char = msvcrt.getch().decode('utf-8')
-                    if char == chr(27):
-                        return admin_content()
-                except UnicodeDecodeError:
-                    pass
->>>>>>> f31ce46ee833d95beb78292ff37882fc2a8b189f
 ##------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def del_ac():
     print()
