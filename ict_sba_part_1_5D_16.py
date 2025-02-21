@@ -139,16 +139,20 @@ def Login():
     while all_match == False:
         print("                                                          <Login>")
         print()
+        u_match = False
+        p_match = False
+        all_wrong = False
+        gad_match = False
         i = 0
         uname = input("                                                         Username: ")
         print()
-        pas = maskpass.askpass(prompt="                                                         Password: ", mask="*")
-        while not all_match and i <= len(username) -1:
+        pas = input("                                                         Password: ")
+        while not u_match and not all_match and not p_match and not ad_match and i <= len(username) -1:
             u_match = False
             p_match = False
             all_wrong = False
             ad_match = False
-            if uname == "Admin" and pas == "1":
+            if uname == "Admin" and username[i] == "Admin" and password[i] == pas:
                 ad_match = True
             elif username[i] == uname and password[i] == pas:
                 all_match = True
@@ -157,7 +161,7 @@ def Login():
             elif username[i] != uname and password[i] == pas:
                 p_match = True
             else:
-                all_wrong =True
+                all_wrong = True
             i += 1
         if ad_match:
             os.system("cls")
@@ -185,7 +189,7 @@ def Login():
             os.system("cls")
             print("                                                      Wrong username!")
             print()
-        elif all_wrong:
+        else:
             os.system("cls")
             print("                                                       Fail to login!")
             print()
@@ -710,6 +714,7 @@ def del_ac():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def pas_change():
     print()
+    os.system("cls")
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def title():
     os.system("cls")
