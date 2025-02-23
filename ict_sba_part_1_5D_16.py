@@ -120,7 +120,7 @@ def register():
                 print("                                                   At least 1 number!")
                 print()
             if not space:
-                print("                                                      Should contain no space!")
+                print("                                                   Should not contain space!")
                 print()
             length= False
             capital= False
@@ -142,7 +142,7 @@ def Login():
         u_match = False
         p_match = False
         all_wrong = False
-        gad_match = False
+        ad_match = False
         i = 0
         uname = input("                                                         Username: ")
         print()
@@ -223,9 +223,9 @@ def admin_content():
     os.system("cls")
     print("                                                         <Admin Menu>")
     print()
-    print("                                               (1).Delete Assessments Scheduled")
+    print("                                               (1).Schedule Assessments")
     print()
-    print("                                               (2).Schedule Assessments")
+    print("                                               (2).Delete Assessments Scheduled")
     print()
     print("                                               (3).Delete Account")
     print()
@@ -236,13 +236,13 @@ def admin_content():
        if msvcrt.kbhit():
             char = msvcrt.getwch() 
             if char == "1":
-                return delete()
-            elif char == "2":
                 return schedule()
+            elif char == "2":
+                return delete()
             elif char == "3":
                 return del_ac()
             elif char == "4":
-                return pas_change
+                return change_pas()
             elif char == chr(27):
                 os.system("cls")
                 return title()
@@ -263,7 +263,7 @@ def a():
     
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def schedule():
-    global m, d, class_
+    global m, d, class_ , n
     iput = False
     os.system("cls")
     while iput == False:
@@ -313,8 +313,43 @@ def schedule():
                             d += 1
                         break
                 if char == chr(13):
-                    return subject()
+                    f4 = open("record.txt", "r")
+                    g = f4.readlines()
+                    for y in range(len(g)):
+                         g[y] = g[y].replace("\n", "")
+                    f4.close()
+                    bubble_sort(g)
+                    linear_search2(str(m) +"-" + str(d),class_, g)
+                    os.system("cls") 
+                    return alarm()
 
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def alarm():
+    global n, uname
+    if n >= 3 and n < 5:
+        print("                        "+Fore.YELLOW +"There are " + str(n) + " assessmants on that day.Do you still want to schedule assessment? " + Style.RESET_ALL)
+        print()
+        print("(Yes)Y                 (NO)N")
+        while True:
+            if msvcrt.kbhit():
+                char = msvcrt.getwch()
+                if (char == "Y" or char == "y"):
+                    return subject()
+                elif (char == "N" or char == "n"):
+                    return content()
+    elif n >= 5:
+        print("                         "+Fore.RED +"There are too many assessments scheduled on that day.You cannot schedule!"+ Style.RESET_ALL)
+        print()
+        print("           　　　　  　　　　 　   　　          Press <ENTER> to back to menu.")
+        while True:
+            if msvcrt.kbhit():
+                char = msvcrt.getwch()
+                if char == chr(13):
+                    if uname != "Admin":
+                        return content()
+                    else:
+                        return admin_content()
+    return subject()
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def subject_list():
     global q
@@ -483,7 +518,6 @@ def display():
                             choosen = True
                             os.system("cls")
                             print("                                                  1.Specific Date")
-                            print("                                                  2.Month")
                             while True:
                                 if msvcrt.kbhit():
                                     char = msvcrt.getwch()
@@ -520,34 +554,6 @@ def display():
                                             if char == chr(13):
                                                 check = str(m) +"-" + str(d)
                                                 return result()
-                                    elif char == "2":
-                                        m = 1
-                                        while True:
-                                            os.system("cls")
-                                            print()
-                                            print()
-                                            print()
-                                            print("                                                         (NEXT MONTH)W")
-                                            print()
-                                            print()
-                                            print()
-                                            print("                                                       (PREVIOUS MONTH)S")
-                                            print("Month: "+str(m))
-                                            print("Press <ENTER> to confirm.")
-                                            while True:
-                                                if msvcrt.kbhit():
-                                                    char = msvcrt.getwch()
-                                                    if (char == "w" or char == "W") and m!= 12:
-                                                        m += 1
-                                                    elif (char == "s" or char == "S") and m!= 1:
-                                                        m = m - 1
-                                                    break
-                                            if char == chr(13):
-                                                check = str(m)
-                                                return result()
-                                            
-                                        
-                            
                             
                             
                         elif char == "4":
@@ -626,6 +632,7 @@ def swap(a, b, arr2):
     
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def linear_search(c,l):
+    global n
     x = 0
     found = False
     while x < len(l):
@@ -639,6 +646,24 @@ def linear_search(c,l):
         os.system("cls")
         print("Result: ")
         print("                                                      "+Fore.RED + "No result!" + Style.RESET_ALL)
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------       
+def linear_search2(c,d,j):
+    global n , l
+    x = 0
+    n = 0
+    found = False
+    while x < len(j):
+        index =j[x].find(c)
+        if index != -1:
+            found = True
+            k = x
+            index1 = j[k].find(d)
+            if index1 != -1:
+                print(j[k])
+                n += 1
+        x = x + 1
+    print(x)
+    print(n)
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def record():
     global g
@@ -710,11 +735,99 @@ def delete():
                     return admin_content()
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def del_ac():
-    print()
+    print("aaaaa")
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-def pas_change():
-    print()
+def change_pas():
+    username, password = getData_login()
+    length= False
+    capital= False
+    small= False
+    num= False
+    space = True
+    same = False
+    same_pas = False
     os.system("cls")
+    pas_input = False
+    while pas_input == False:
+        old_pas = input("                                                Enter the original password: ")
+        if old_pas == password[0]:
+            pas_input = True
+            os.system("cls")
+            while not(length and capital and small and num and space and same):
+                n_pas1 = input("                                                Enter new password: ")
+                if len(n_pas1) >= 8:
+                    length= True
+                for i in range(0,len(n_pas1)):
+                    if n_pas1 != old_pas:
+                        same = True
+                    if n_pas1[i] == " ":
+                        space = False
+                    if n_pas1[i] >= "0" and n_pas1[i] <= "9":
+                        num=True
+                    if n_pas1[i] >="A" and n_pas1[i] <= "Z":
+                        capital= True
+                    if n_pas1[i] >="a" and n_pas1[i] <= "z":
+                        small= True
+                if length and capital and small and num and space and same:
+                    while same_pas == False:
+                        n_pas2 = input("                                                Enter new password again: ")
+                        if n_pas2 == n_pas1:
+                            same_pas = True
+                            password[0] = n_pas1
+                            n_pas1 += "\n"
+                            f = open("password.txt", "w")
+                            for x in range(len(password)):
+                                f.write(password[x] + "\n")
+                            f.close()
+                            os.system("cls")
+                            print("                                                   " + Fore.BLUE + "Password changed!" + Style.RESET_ALL)
+                            print()
+                            print()
+                            print()
+                            print("                                               Please press <ENTER> to login.")
+                            while True:
+                                if msvcrt.kbhit():
+                                    char = msvcrt.getwch()
+                                    if char == chr(13):
+                                        return title()
+                        else:
+                            os.system("cls")
+                            print("                                                        "+Fore.RED +"Wrong input!" + Style.RESET_ALL)
+                        
+                else:
+                    os.system("cls")
+                    print("                                          Here is/are the problem(s) of your password: ")
+                    print()
+                    if not same:
+                        print("                                                   Cannot same as the original one!")
+                    if not length:
+                        print("                                                   At least 8 characters!")
+                        print()
+                    if not capital:
+                        print("                                                   At least 1 capital letter!")
+                        print()
+                    if not small:
+                        print("                                                   At least 1 small letter!")
+                        print()
+                    if not num:
+                        print("                                                   At least 1 number!")
+                        print()
+                    if not space:
+                        print("                                                   Should not contain space!")
+                        print()
+                    length= False
+                    capital= False
+                    small= False
+                    num= False
+                    space= True
+                    same = False
+                    print("")
+            
+        else:
+            os.system("cls")
+            print("                                                        "+Fore.RED +"Wrong input!" + Style.RESET_ALL)
+    
+    
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def title():
     os.system("cls")
