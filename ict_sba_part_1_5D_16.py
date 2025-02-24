@@ -54,7 +54,7 @@ def register():
         duplicate = False
         empty = False
         i = -1
-        uname = input("                                                  Enter a username: ")
+        uname = input("                                                  Enter a username: ").strip()
         while not duplicate and i < len(username) -1:
             i+= 1
             if uname == username[i]:
@@ -440,7 +440,7 @@ def txt_record():
     time = datetime.now().time().strftime("%X")
     date = datetime.now().date()
     f4 = open("record.txt","a")
-    f4.write("\n" + str(date) + "%9s"%  str(time) + "%9s"% str(class_) + "%14s"%   str(m) +"-"+str(d) + "%11s"%  str(assessment) + " " + str(work) + "\t\t" + str(uname))
+    f4.write("\n" + str(date) + "\t" + str(time) + "\t" + str(class_) + "\t\t" + str(m) +"-"+str(d) + "\t"  + str(assessment) + " " + str(work) + "\t\t" + str(uname))
     f4.close()
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def search(ass):
@@ -716,13 +716,19 @@ def delete():
         num = int(input("                                             Which record do you want to delete? "))
         if num < 1:
             print("                                                        "+Fore.RED +"Wrong input!" + Style.RESET_ALL)
+            correct = False
         elif num > len(g):
             print("                                                     "+Fore.RED +"Index out of range!" + Style.RESET_ALL)
+            correct = False
         else:
             correct = True
-            print(g[num-1])
-            g[num -1] = g[num -1]
+            del g[n - 1]
+            f = open("record.txt", "w")
+            for y in range(len(g)):
+                f.write(g[y] + "\n")
+            f.close()
             os.system("cls")
+            n = 0
             print("                                                   Record deleted!")
             print()
             print()
@@ -735,7 +741,86 @@ def delete():
                     return admin_content()
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def del_ac():
-    print("aaaaa")
+    global num
+    username, password = getData_login()
+    os.system("cls")
+    all_match = False
+    while all_match == False:
+        print("                                                        <Delete Account>")
+        print()
+        u_match = False
+        p_match = False
+        wrong = False
+        i = 0
+        uname = input("                                                    Enter account username: ")
+        print()
+        pas = input("                                                    Enter account password: ")
+        while not u_match and not p_match and not all_match and i <= len(username) - 1:
+            u_match = False
+            p_match = False
+            wrong = False
+            if username[i] == uname and password[i] == pas:
+                all_match = True
+                num = i
+            else:
+                wrong = True
+            i += 1
+        if all_match:
+            os.system("cls")
+            return del_main()
+        elif wrong:
+            os.system("cls")
+            print("                                                    " +Fore.RED +"Wrong password or username!" + Style.RESET_ALL)
+            print()
+
+def del_main():
+    u_del = ""
+    pas_del = ""
+    global num
+    username, password = getData_login()
+    print("                                   Are you sure you want to delete this account? ")
+    print()
+    print()
+    print()
+    print("                                         (YES)Y                        (NO)N")
+    while True:
+        if msvcrt.kbhit():
+            char = msvcrt.getwch()
+            if char == "Y" or char == "y":
+                del username[num]
+                del password[num]
+                os.system("cls")
+                f1 = open("username.txt", "w")
+                f2 = open("password.txt", "w")
+                for x in range(len(username)):
+                    f1.write(username[x] + "\n")
+                for y in range(len(password)):
+                    f2.write(password[y] + "\n")
+                f1.close()
+                f2.close()
+                print("                                    " + Fore.YELLOW + "Account deleted!" + Style.RESET_ALL)
+                print()
+                print()
+                print()
+                print("                                                   <ESC>Back To Menu")
+                while True:
+                    if msvcrt.kbhit():
+                        char = msvcrt.getwch()
+                        if char == chr(27):
+                            return admin_content()
+            elif char == "N" or char == "n":
+                os.system("cls")
+                print("Delete account cancelled")
+                print()
+                print()
+                print()
+                print("                                                   <ESC>Back To Menu")
+                while True:
+                    if msvcrt.kbhit():
+                        char = msvcrt.getwch()
+                        if char == char(27):
+                            return admin_content()
+    
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def change_pas():
     username, password = getData_login()
