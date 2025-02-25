@@ -264,6 +264,7 @@ def a():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def schedule():
     global m, d, class_ , n
+    List = getdisplay_data()
     iput = False
     os.system("cls")
     while iput == False:
@@ -318,8 +319,8 @@ def schedule():
                     for y in range(len(g)):
                          g[y] = g[y].replace("\n", "")
                     f4.close()
-                    bubble_sort(g)
-                    linear_search2(str(m) +"-" + str(d),class_, g)
+                    bubble_sort(List)
+                    linear_search2(str(m) +"-" + str(d),class_, List)
                     os.system("cls") 
                     return alarm()
 
@@ -440,7 +441,7 @@ def txt_record():
     time = datetime.now().time().strftime("%X")
     date = datetime.now().date()
     f4 = open("record.txt","a")
-    f4.write("\n" + str(date) + "\t" + str(time) + "\t" + str(class_) + "\t\t" + str(m) +"-"+str(d) + "\t"  + str(assessment) + " " + str(work) + "\t\t" + str(uname))
+    f4.write("\n" + str(date) + " " + str(time) + "\t" + str(class_) + "\t" + str(m) +"-"+str(d) + "\t"  + str(assessment) + "\t" + str(work) + "\t" + str(uname))
     f4.close()
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def search(ass):
@@ -451,30 +452,40 @@ def search(ass):
         if ass == q[x]:
             found = True
         x += 1
-    return found   
+    return found
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def getdisplay_data():
+    f = open("record.txt", "r")
+    List = f.readlines()
+    f.close()
+    for i in range(len(List)):
+        List[i] = List[i].strip("\n")
+    for j in range(len(List)):
+        List[j] = List[j].split("\t")
+    return List
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def display():
-    global check
+    global check, var
     os.system("cls")
     iput = False
     os.system("cls")
     while iput == False:
         print("                                              What you want to check? ")
         print()
-        print("                                                  1.Assessment")
+        print("                                                  1.Class")
         print()
-        print("                                                  2.Class")
+        print("                                                  2.Assessment Date")
         print()
-        print("                                                  3.Assessment Date")
+        print("                                                  3.Subject")
         print()
-        print("                                                  4.Subject")
+        print("                                                  4.Assessment")
         print()
         print("                                                  5.Teacher")
         choosen = False
         while choosen == False:
             if msvcrt.kbhit():
                         char = msvcrt.getwch()
-                        if char == "1":
+                        if char == "4":
                             choosen = True
                             os.system("cls")
                             print("                                                  1.Dictation")
@@ -492,9 +503,10 @@ def display():
                                         check = "Test"
                                     elif char == "4":
                                         check = "Exam"
-                                    return result()
+                                    var = 4
+                                    return result(var, check)
 
-                        elif char == "2":
+                        elif char == "1":
                             choosen = True
                             classlist = a()
                             os.system("cls")
@@ -512,9 +524,10 @@ def display():
                                     print("                                                      "+Fore.RED + "Wrong input!" + Style.RESET_ALL)
                                 else:
                                     iput = True
-                                    return result()
+                                    var = 1
+                                    return result(var, check)
 
-                        elif char == "3":
+                        elif char == "2":
                             choosen = True
                             os.system("cls")
                             print("                                                  1.Specific Date")
@@ -553,10 +566,11 @@ def display():
                                                     break
                                             if char == chr(13):
                                                 check = str(m) +"-" + str(d)
-                                                return result()
+                                                var = 2
+                                                return result(var, check)
                             
                             
-                        elif char == "4":
+                        elif char == "3":
                             choosen = True
                             subject_list()
                             os.system("cls")
@@ -570,7 +584,8 @@ def display():
                                     print("                                                      "+Fore.RED + "Wrong input!" + Style.RESET_ALL)
                                 else:
                                     iput = True
-                                    return result()
+                                    var = 3
+                                    return result(var, check)
                                                
                             
                         elif char == "5":
@@ -588,7 +603,8 @@ def display():
                                 while i <= len(username) -1:
                                     if username[i] == check:
                                         exist = True
-                                        return result()
+                                        var = 5
+                                        return result(var, check)
                                     else:
                                         os.system("cls") 
                                         print("                                                      "+Fore.RED + "Not exist!" + Style.RESET_ALL)
@@ -596,18 +612,13 @@ def display():
                             
                             
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-def result():
-    global check,g
+def result(var, check):
     os.system("cls")
     print("Result:")
-    f4 = open("record.txt", "r")
-    g = f4.readlines()
-    for y in range(len(g)):
-         g[y] = g[y].replace("\n", "")
-    f4.close()
-    print("                       SCHEDULE DATE         CLASS     ASSESSMENT DATE     SUBJECT           TEACHER       ")
-    bubble_sort(g)
-    linear_search(check , g)
+    List = getdisplay_data()
+    print("                       SCHEDULE DATE          CLASS       ASSESSMENT DATE          SUBJECT            TEACHER       ")
+    bubble_sort(List)
+    linear_search(check , List, var)
     print()
     print()
     print()
@@ -631,38 +642,25 @@ def swap(a, b, arr2):
     arr2[b] = temp
     
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-def linear_search(c,l):
+def linear_search(c,l, v):
     global n
-    x = 0
     found = False
-    while x < len(l):
-        index = l[x].find(c)
-        if index != -1:
+    for i in range(len(l)):
+        if l[i][v] == c:
+            print("                    " + l[i][0] + "\t\t" + l[i][1] + "\t\t" + l[i][2] + "\t\t" + l[i][3] + " " + l[i][4] + "\t\t" + l[i][5])
             found = True
-            print("                    --------------------------------------------------------------------------------     ")
-            print("                    " + l[x])
-        x = x + 1
     if found == False:
         os.system("cls")
         print("Result: ")
         print("                                                      "+Fore.RED + "No result!" + Style.RESET_ALL)
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------       
-def linear_search2(c,d,j):
-    global n , l
-    x = 0
+def linear_search2(c,class_,l):
+    global n
     n = 0
     found = False
-    while x < len(j):
-        index =j[x].find(c)
-        if index != -1:
-            found = True
-            k = x
-            index1 = j[k].find(d)
-            if index1 != -1:
-                print(j[k])
-                n += 1
-        x = x + 1
-    print(x)
+    for i in range(len(l)):
+        if l[i][2] == c and l[i][1] == class_:
+            n += 1
     print(n)
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def record():
@@ -672,14 +670,16 @@ def record():
     g = f4.readlines()
     for x in range(len(g)):
         g[x] = g[x].strip()
+    for k in range(len(g)):
+        g[k] = g[k].split("\t")
     f4.close()
-    print("                                                           RECORD")
+    print("                                                             <RECORD>")
     print()
-    print("                       SCHEDULE DATE         CLASS     ASSESSMENT DATE     SUBJECT           TEACHER       ")
+    print("                       SCHEDULE DATE          CLASS       ASSESSMENT DATE          SUBJECT            TEACHER       ")
     print()
     for y in range(len(g)):
-        print("                    " + g[y])
-        print("                    --------------------------------------------------------------------------------     ")
+        print("                    " + g[y][0] + "\t\t" + g[y][1] + "\t\t" + g[y][2] + "\t\t" + g[y][3] + " " + g[y][4] + "\t\t" + g[y][5])
+        print("                    ------------------------------------------------------------------------------------------     ")
     print()
     print()
     print()
@@ -773,6 +773,7 @@ def del_ac():
             print("                                                    " +Fore.RED +"Wrong password or username!" + Style.RESET_ALL)
             print()
 
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def del_main():
     u_del = ""
     pas_del = ""
