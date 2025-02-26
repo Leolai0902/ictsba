@@ -703,7 +703,7 @@ def delete():
     os.system("cls")
     print("                                                            Delete")
     print()
-    print("                       SCHEDULE DATE         CLASS     ASSESSMENT DATE     SUBJECT           TEACHER       ")
+    print("                       SCHEDULE DATE            CLASS     ASSESSMENT DATE     SUBJECT           TEACHER       ")
     print()
     for i in range(len(g)):
         n += 1
@@ -711,33 +711,47 @@ def delete():
         print("                    --------------------------------------------------------------------------------     ")
     print()
     correct = False
-    while not correct:
-        num = int(input("                                             Which record do you want to delete? "))
-        if num < 1:
-            print("                                                        "+Fore.RED +"Wrong input!" + Style.RESET_ALL)
-            correct = False
-        elif num > len(g):
-            print("                                                     "+Fore.RED +"Index out of range!" + Style.RESET_ALL)
-            correct = False
-        else:
-            correct = True
-            del g[n - 1]
-            f = open("record.txt", "w")
-            for y in range(len(g)):
-                f.write(g[y] + "\n")
-            f.close()
-            os.system("cls")
-            n = 0
-            print("                                                   Record deleted!")
-            print()
-            print()
-            print()
-            print("                                                   <ESC>Back To Menu")
+    if n == 0:
+        os.system("cls")
+        print("                                            No assessment you can delete.")
+        print()
+        print()
+        print()
+        print("                                                   <ESC>Back To Menu")
         while True:
             if msvcrt.kbhit():
                 char = msvcrt.getwch()
                 if char == chr(27):
                     return admin_content()
+    else:
+        while correct == False:
+            num = input("                                             Which record do you want to delete? ")
+            if num.isnumeric() == True:
+                if num < str(1):
+                    print("                                                        "+Fore.RED +"Wrong input!" + Style.RESET_ALL)
+                elif num > str(len(g)):
+                    print("                                                     "+Fore.RED +"Index out of range!" + Style.RESET_ALL)
+                else:
+                    correct = True
+                    del g[n - 1]
+                    f = open("record.txt", "w")
+                    for y in range(len(g)):
+                        f.write(g[y] + "\n")
+                    f.close()
+                    os.system("cls")
+                    n = 0
+                    print("                                                   Record deleted!")
+                    print()
+                    print()
+                    print()
+                    print("                                                   <ESC>Back To Menu")
+                    while True:
+                        if msvcrt.kbhit():
+                            char = msvcrt.getwch()
+                            if char == chr(27):
+                                return admin_content()
+            elif num.isnumeric() == False:
+                print("                                                        "+Fore.RED +"Wrong input!" + Style.RESET_ALL)
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def del_ac():
     global num
