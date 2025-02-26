@@ -368,6 +368,7 @@ def subject_list():
 #--------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def subject():
     global assessment, work, uname
+    List = getdisplay_data()
     OK = False
     subject_list()
     while OK == False:
@@ -375,7 +376,7 @@ def subject():
         assessment = assessment.upper()
         found_result = search(assessment)
         if  found_result:
-            print("                                                        What assessment? ")
+            print("                                                       What assessment? ")
             print()
             print("                                                            1.Dictation")
             print()
@@ -410,7 +411,7 @@ def subject():
                 print(".", end = "",flush = True)
                 time.sleep(0.1)
             os.system("cls")
-            txt_record()
+            txt_record(List)
             print("                                                 Assessment scheduled.")
             print()
             print("                                                 Press <ENTER> to back to menu.")
@@ -435,12 +436,18 @@ def subject():
             print()
     return q
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-def txt_record():
+def txt_record(l):
     global class_, assessment, m, d, uname, work
     time = datetime.now().time().strftime("%X")
     date = datetime.now().date()
-    f4 = open("record.txt","a")
-    f4.write("\n" + str(date) + " " + str(time) + "\t" + str(class_) + "\t" + str(m) +"-"+str(d) + "\t"  + str(assessment) + "\t" + str(work) + "\t" + str(uname))
+    done = [str(date), str(time), str(class_),  (str(m)+ "-"+str(d)), str(assessment), str(work), str(uname)]
+    l = l + [done]
+    f4 = open("record.txt","w")
+    for i in range(len(l)):
+        if i < len(l) -1:
+            f4.write(l[i][0] + "\t" + l[i][1] + "\t" + l[i][2] + "\t" + l[i][3] + "\t" + l[i][4] + "\t" + l[i][5] + "\n")
+        else:
+            f4.write(l[i][0] + "\t" + l[i][1] + "\t" + l[i][2] + "\t" + l[i][3] + "\t" + l[i][4] + "\t" + l[i][5])
     f4.close()
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def search(ass):
@@ -511,7 +518,7 @@ def display():
                             os.system("cls")
                             iput = False
                             while iput == False:
-                                check = input("                                              Which class? ").strip()
+                                check = input("                                                 Which class? ").strip()
                                 check = check.upper()
                                 class_exist = False
                                 for x in range(len(classlist)):
@@ -733,7 +740,7 @@ def delete():
                     print("                                                     "+Fore.RED +"Index out of range!" + Style.RESET_ALL)
                 else:
                     correct = True
-                    del g[n - 1]
+                    del g[n -1]
                     f = open("record.txt", "w")
                     for y in range(len(g)):
                         f.write(g[y] + "\n")
