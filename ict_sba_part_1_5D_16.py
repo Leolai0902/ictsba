@@ -1,7 +1,6 @@
 import msvcrt
 import os, time, sys
 import calendar
-import maskpass
 from colorama import  Fore, Style #change colour
 from datetime import datetime, date
 
@@ -254,7 +253,7 @@ def a():
             classlist[x][y] = str(x+1)+str(chr(65+y))
     print("%68s" % "C L A S S")
     for x in range(6):
-        print("                　　　　　　　　 　　　         　  "" | ", end = "")
+        print("                                                      | ", end = "")
         for y in range(4):
             print(classlist[x][y] + " | ", end = "")
         print("")
@@ -341,7 +340,7 @@ def alarm():
     elif n >= 5:
         print("                         "+Fore.RED +"There are too many assessments scheduled on that day.You cannot schedule!"+ Style.RESET_ALL)
         print()
-        print("           　　　　  　　　　 　   　　          Press <ENTER> to back to menu.")
+        print("                                                 Press <ENTER> to back to menu.")
         while True:
             if msvcrt.kbhit():
                 char = msvcrt.getwch()
@@ -361,30 +360,30 @@ def subject_list():
         q[p] = q[p].strip()
     f3.close()
     for j in range(4):
-        print("           　　　　　　　　 　　　         　  ", end = "")
+        print("                                             ", end = "")
         for k in range(4):
             print("\t" + q[j*4 + k], end = " ")
         print()
     print()
-#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def subject():
     global assessment, work, uname
     OK = False
     subject_list()
     while OK == False:
-        assessment = input("           　　　　  　　　　 　   　　            　   What subject? ").strip()
+        assessment = input("                                                      What subject? ").strip()
         assessment = assessment.upper()
         found_result = search(assessment)
         if  found_result:
-            print("           　　　　  　　　　 　   　　            　   What assessment? ")
+            print("                                                        What assessment? ")
             print()
-            print("           　　　　  　　　　     　　      　　      　 　 1.Dictation")
+            print("                                                            1.Dictation")
             print()
-            print("           　　　　  　　　　   　  　　      　      　    2.Quiz")
+            print("                                                            2.Quiz")
             print()
-            print("           　　　　  　　　  　　  　　            　       3.Test")
+            print("                                                            3.Test")
             print()
-            print("           　　　　  　　　  　　     　　         　 　    4.Exam")
+            print("                                                            4.Exam")
             choose = False
             while choose == False:
                 if msvcrt.kbhit():
@@ -406,15 +405,15 @@ def subject():
                             work = "Exam"
                             choose = True
             OK = True
-            print("           　　　　  　　　　 　   　　            　   Loading", end = "")
+            print("                                                        Loading", end = "")
             for x in range(15):
                 print(".", end = "",flush = True)
                 time.sleep(0.1)
             os.system("cls")
             txt_record()
-            print("           　　　　  　　　　 　   　　          Assessment scheduled.")
+            print("                                                 Assessment scheduled.")
             print()
-            print("           　　　　  　　　　 　   　　          Press <ENTER> to back to menu.")
+            print("                                                 Press <ENTER> to back to menu.")
             while True:
                 if msvcrt.kbhit():
                         char = msvcrt.getwch()
@@ -423,16 +422,16 @@ def subject():
                         else:
                             return admin_content()
         else:
-            print("           　　　　  　　　　 　   　　            　   Loading", end = "")
+            print("                                                        Loading", end = "")
             for x in range(15):
                 print(".", end = "",flush = True)
                 time.sleep(0.1)
             print()
             os.system("cls")
             subject_list()
-            print("           　　　　  　　　　 　   　　            　   "+Fore.RED + "Wrong input!")
+            print("                                                        "+Fore.RED + "Wrong input!")
             print(Style.RESET_ALL)
-            print("           　　　　  　　　　 　   　　            　   Input agian.")
+            print("                                                        Input agian.")
             print()
     return q
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
