@@ -894,7 +894,10 @@ def change_pas():
                             n_pas1 += "\n"
                             f = open("password.txt", "w")
                             for x in range(len(password)):
-                                f.write(password[x] + "\n")
+                                if x < len(password) -1:
+                                    f.write(password[x] + "\n")
+                                else:
+                                    f.write(password[x] + "\n")
                             f.close()
                             os.system("cls")
                             print("                                                   " + Fore.BLUE + "Password changed!" + Style.RESET_ALL)
