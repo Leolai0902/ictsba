@@ -899,7 +899,7 @@ def change_pas():
                                 if x < len(password) -1:
                                     f.write(password[x] + "\n")
                                 else:
-                                    f.write(password[x] + "\n")
+                                    f.write(password[x])
                             f.close()
                             os.system("cls")
                             print("                                                   " + Fore.BLUE + "Password changed!" + Style.RESET_ALL)
