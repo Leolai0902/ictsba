@@ -9,6 +9,9 @@ from datetime import datetime, date
 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+##############
+# Main Menu  #
+##############
 def main_menu():
     print()
     print("                                                       (1).Login")
@@ -26,6 +29,9 @@ def main_menu():
             elif char == chr(27):
                 os.system("cls")
                 sys.exit(0)
+##############
+# Main Menu  #
+##############
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def getData_login():
     f1 = open("username.txt", "r")
@@ -442,6 +448,7 @@ def txt_record(l):
     date = datetime.now().date()
     done = [str(date), str(time), str(class_),  (str(m)+ "-"+str(d)), str(assessment), str(work), str(uname)]
     l = l + [done]
+    print(l)
     f4 = open("record.txt","w")
     for i in range(len(l)):
         if i < len(l) -1:
@@ -771,8 +778,14 @@ def del_ac():
         u_match = False
         p_match = False
         wrong = False
+        admin_found = False
         i = 0
-        uname = input("                                                    Enter account username: ")
+        while admin_found == False:
+            uname = input("                                                    Enter account username: ")
+            if uname == "Admin":
+                print("                                                    " +Fore.RED +"Cannot delete admin account!" + Style.RESET_ALL)
+            else:
+                admin_found = True
         print()
         pas = input("                                                    Enter account password: ")
         while not u_match and not p_match and not all_match and i <= len(username) - 1:
@@ -935,10 +948,19 @@ def change_pas():
     
     
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+###############
+#    Title    #
+###############
 def title():
     os.system("cls")
-    text = "Assessment Schedule System"
-    padded_text = text.center(122)
-    print(padded_text)
+    print("          _                                   _     ___     _           _      _       ___         _             ")
+    print("         /_\   ______ ___ _______ __  ___ _ _| |_  / __| __| |_  ___ __| |_  _| |___  / __|_  _ __| |_ ___ _ __  ")
+    print("        / _ \ (_-<_-</ -_|_-<_-< '  \/ -_) ' \  _| \__ \/ _| ' \/ -_) _` | || | / -_) \__ \ || (_-<  _/ -_) '  \ ")
+    print("       /_/ \_\/__/__/\___/__/__/_|_|_\___|_||_\__| |___/\__|_||_\___\__,_|\_,_|_\___| |___/\_, /__/\__\___|_|_|_|")
+    print("                                                                                           |__/                  ")
     main_menu()
 title()
+###############
+#    Title    #
+###############
+
