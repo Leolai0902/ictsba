@@ -509,14 +509,21 @@ def display():
                                     char = msvcrt.getwch()
                                     if char == "1":
                                         check = "Dictation"
+                                        var = 5
+                                        return result(var, check)
                                     elif char == "2":
                                         check = "Quiz"
+                                        var = 5
+                                        return result(var, check)
                                     elif char == "3":
                                         check = "Test"
+                                        var = 5
+                                        return result(var, check)
                                     elif char == "4":
                                         check = "Exam"
-                                    var = 5
-                                    return result(var, check)
+                                        var = 5
+                                        return result(var, check)
+                                    
 
                         elif char == "1":
                             choosen = True
@@ -659,7 +666,7 @@ def linear_search(c,l, v):
     found = False
     for i in range(len(l)):
         if l[i][v] == c:
-            print("                    " + g[y][0] + " " + g[y][1] + "\t\t" + g[y][2] + "\t\t" + g[y][3] + "\t\t" + g[y][4] + " " + g[y][5] + "\t\t" + g[y][6])
+            print("                    " + l[i][0] + " " + l[i][1] + "\t\t" + l[i][2] + "\t\t" + l[i][3] + "\t\t" + l[i][4] + " " + l[i][5] + "\t\t" + l[i][6])
             found = True
     if found == False:
         os.system("cls")
@@ -776,7 +783,6 @@ def del_ac():
         print("                                                        <Delete Account>")
         print()
         u_match = False
-        p_match = False
         wrong = False
         admin_found = False
         i = 0
@@ -788,11 +794,10 @@ def del_ac():
                 admin_found = True
         print()
         pas = input("                                                    Enter account password: ")
-        while not u_match and not p_match and not all_match and i <= len(username) - 1:
+        while not u_match and not all_match and i <= len(username) - 1:
             u_match = False
-            p_match = False
             wrong = False
-            if username[i] == uname and password[i] == pas:
+            if username[i] == uname:
                 all_match = True
                 num = i
             else:
