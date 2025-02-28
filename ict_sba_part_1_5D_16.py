@@ -515,7 +515,7 @@ def display():
                                         check = "Test"
                                     elif char == "4":
                                         check = "Exam"
-                                    var = 4
+                                    var = 5
                                     return result(var, check)
 
                         elif char == "1":
@@ -536,7 +536,7 @@ def display():
                                     print("                                                      "+Fore.RED + "Wrong input!" + Style.RESET_ALL)
                                 else:
                                     iput = True
-                                    var = 1
+                                    var = 2
                                     return result(var, check)
 
                         elif char == "2":
@@ -578,7 +578,7 @@ def display():
                                                     break
                                             if char == chr(13):
                                                 check = str(m) +"-" + str(d)
-                                                var = 2
+                                                var = 3
                                                 return result(var, check)
                             
                             
@@ -596,7 +596,7 @@ def display():
                                     print("                                                      "+Fore.RED + "Wrong input!" + Style.RESET_ALL)
                                 else:
                                     iput = True
-                                    var = 3
+                                    var = 4
                                     return result(var, check)
                                                
                             
@@ -615,7 +615,7 @@ def display():
                                 while i <= len(username) -1:
                                     if username[i] == check:
                                         exist = True
-                                        var = 5
+                                        var = 6
                                         return result(var, check)
                                     else:
                                         os.system("cls") 
@@ -659,7 +659,7 @@ def linear_search(c,l, v):
     found = False
     for i in range(len(l)):
         if l[i][v] == c:
-            print("                    " + l[i][0] + "\t\t" + l[i][1] + "\t\t" + l[i][2] + "\t\t" + l[i][3] + " " + l[i][4] + "\t\t" + l[i][5])
+            print("                    " + g[y][0] + " " + g[y][1] + "\t\t" + g[y][2] + "\t\t" + g[y][3] + "\t\t" + g[y][4] + " " + g[y][5] + "\t\t" + g[y][6])
             found = True
     if found == False:
         os.system("cls")
@@ -710,16 +710,18 @@ def delete():
     g = f4.readlines()
     for x in range(len(g)):
         g[x] = g[x].strip()
+    for k in range(len(g)):
+        g[k] = g[k].split("\t")
     f4.close()
     n = 0
     os.system("cls")
     print("                                                            Delete")
     print()
-    print("                       SCHEDULE DATE            CLASS     ASSESSMENT DATE     SUBJECT           TEACHER       ")
+    print("                       SCHEDULE DATE          CLASS       ASSESSMENT DATE          SUBJECT            TEACHER       ")
     print()
-    for i in range(len(g)):
+    for y in range(len(g)):
         n += 1
-        print("                    " + str(n) + "." + g[i])
+        print("                    " + str(n) + "."  + g[y][0] + " " + g[y][1] + "\t" + g[y][2] + "\t\t" + g[y][3] + "\t\t" + g[y][4] + " " + g[y][5] + "\t\t" + g[y][6])
         print("                    --------------------------------------------------------------------------------     ")
     print()
     correct = False
