@@ -382,7 +382,7 @@ def subject():
         assessment = assessment.upper()
         found_result = search(assessment)
         if  found_result:
-            print("                                                       What assessment? ")
+            print("                                                      What assessment? ")
             print()
             print("                                                            1.Dictation")
             print()
@@ -448,13 +448,12 @@ def txt_record(l):
     date = datetime.now().date()
     done = [str(date), str(time), str(class_),  (str(m)+ "-"+str(d)), str(assessment), str(work), str(uname)]
     l = l + [done]
-    print(l)
     f4 = open("record.txt","w")
     for i in range(len(l)):
-        if i < len(l) -1:
-            f4.write(l[i][0] + "\t" + l[i][1] + "\t" + l[i][2] + "\t" + l[i][3] + "\t" + l[i][4] + "\t" + l[i][5] + "\n")
+        if i < len(l):
+            f4.write(l[i][0] + "\t" + l[i][1] + "\t" + l[i][2] + "\t" + l[i][3] + "\t" + l[i][4] + "\t" + l[i][5] + "\t" + l[i][6] + "\n")
         else:
-            f4.write(l[i][0] + "\t" + l[i][1] + "\t" + l[i][2] + "\t" + l[i][3] + "\t" + l[i][4] + "\t" + l[i][5])
+            f4.write(l[i][0] + "\t" + l[i][1] + "\t" + l[i][2] + "\t" + l[i][3] + "\t" + l[i][4] + "\t" + l[i][5] + "\t" + l[i][6])
     f4.close()
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def search(ass):
@@ -674,7 +673,6 @@ def linear_search2(c,class_,l):
     for i in range(len(l)):
         if l[i][2] == c and l[i][1] == class_:
             n += 1
-    print(n)
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def record():
     global g
@@ -691,7 +689,7 @@ def record():
     print("                       SCHEDULE DATE          CLASS       ASSESSMENT DATE          SUBJECT            TEACHER       ")
     print()
     for y in range(len(g)):
-        print("                    " + g[y][0] + "\t\t" + g[y][1] + "\t\t" + g[y][2] + "\t\t" + g[y][3] + " " + g[y][4] + "\t\t" + g[y][5])
+        print("                    " + g[y][0] + " " + g[y][1] + "\t\t" + g[y][2] + "\t\t" + g[y][3] + "\t\t" + g[y][4] + " " + g[y][5] + "\t\t" + g[y][6])
         print("                    ------------------------------------------------------------------------------------------     ")
     print()
     print()
