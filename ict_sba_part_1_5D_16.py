@@ -326,7 +326,7 @@ def schedule():
                     f4.close()
                     bubble_sort(List)
                     linear_search2(str(m) +"-" + str(d),class_, List)
-                    os.system("cls") 
+                    os.system("cls")
                     return alarm()
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -335,7 +335,7 @@ def alarm():
     if n >= 3 and n < 5:
         print("                        "+Fore.YELLOW +"There are " + str(n) + " assessmants on that day.Do you still want to schedule assessment? " + Style.RESET_ALL)
         print()
-        print("(Yes)Y                 (NO)N")
+        print("                                                 (Yes)Y                 (NO)N")
         while True:
             if msvcrt.kbhit():
                 char = msvcrt.getwch()
@@ -450,7 +450,7 @@ def txt_record(l):
     l = l + [done]
     f4 = open("record.txt","w")
     for i in range(len(l)):
-        if i < len(l):
+        if i < len(l) -1:
             f4.write(l[i][0] + "\t" + l[i][1] + "\t" + l[i][2] + "\t" + l[i][3] + "\t" + l[i][4] + "\t" + l[i][5] + "\t" + l[i][6] + "\n")
         else:
             f4.write(l[i][0] + "\t" + l[i][1] + "\t" + l[i][2] + "\t" + l[i][3] + "\t" + l[i][4] + "\t" + l[i][5] + "\t" + l[i][6])
@@ -540,7 +540,7 @@ def display():
                                             class_exist = True
                                 if class_exist == False:
                                     os.system("cls") 
-                                    print("                                                      "+Fore.RED + "Wrong input!" + Style.RESET_ALL)
+                                    print("                                                 "+Fore.RED + "Wrong input!" + Style.RESET_ALL)
                                 else:
                                     iput = True
                                     var = 2
@@ -600,7 +600,7 @@ def display():
                                 found_result = search(check)
                                 if not found_result:
                                     os.system("cls") 
-                                    print("                                                      "+Fore.RED + "Wrong input!" + Style.RESET_ALL)
+                                    print("                                              "+Fore.RED + "Wrong input!" + Style.RESET_ALL)
                                 else:
                                     iput = True
                                     var = 4
@@ -678,7 +678,7 @@ def linear_search2(c,class_,l):
     n = 0
     found = False
     for i in range(len(l)):
-        if l[i][2] == c and l[i][1] == class_:
+        if l[i][3] == c and l[i][2] == class_:
             n += 1
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def record():
@@ -722,7 +722,7 @@ def delete():
     f4.close()
     n = 0
     os.system("cls")
-    print("                                                            Delete")
+    print("                                                            <Delete>")
     print()
     print("                       SCHEDULE DATE          CLASS       ASSESSMENT DATE          SUBJECT            TEACHER       ")
     print()
@@ -757,7 +757,10 @@ def delete():
                     del g[n -1]
                     f = open("record.txt", "w")
                     for y in range(len(g)):
-                        f.write(g[y] + "\n")
+                        if y < len(g) -1:
+                            f.write(g[y][0] + "\t" + g[y][1] + "\t" + g[y][2] + "\t" + g[y][3] + "\t" + g[y][4] + "\t" + g[y][5] + "\t" + g[y][6] + "\n")
+                        else:
+                            f.write(g[y][0] + "\t" + g[y][1] + "\t" + g[y][2] + "\t" + g[y][3] + "\t" + g[y][4] + "\t" + g[y][5] + "\t" + g[y][6])
                     f.close()
                     os.system("cls")
                     n = 0
@@ -793,7 +796,6 @@ def del_ac():
             else:
                 admin_found = True
         print()
-        pas = input("                                                    Enter account password: ")
         while not u_match and not all_match and i <= len(username) - 1:
             u_match = False
             wrong = False
@@ -808,7 +810,7 @@ def del_ac():
             return del_main()
         elif wrong:
             os.system("cls")
-            print("                                                    " +Fore.RED +"Wrong password or username!" + Style.RESET_ALL)
+            print("                                                         " +Fore.RED +"Wrong username!" + Style.RESET_ALL)
             print()
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -832,12 +834,18 @@ def del_main():
                 f1 = open("username.txt", "w")
                 f2 = open("password.txt", "w")
                 for x in range(len(username)):
-                    f1.write(username[x] + "\n")
+                    if x < len(username) -1:
+                        f1.write(username[x] + "\n")
+                    else:
+                        f1.write(username[x])
                 for y in range(len(password)):
-                    f2.write(password[y] + "\n")
+                    if y < len(password) -1:
+                        f2.write(password[y] + "\n")
+                    else:
+                        f2.write(password[y])
                 f1.close()
                 f2.close()
-                print("                                    " + Fore.YELLOW + "Account deleted!" + Style.RESET_ALL)
+                print("                                                   " + Fore.YELLOW + "Account deleted!" + Style.RESET_ALL)
                 print()
                 print()
                 print()
@@ -849,7 +857,7 @@ def del_main():
                             return admin_content()
             elif char == "N" or char == "n":
                 os.system("cls")
-                print("Delete account cancelled")
+                print("                                                 Delete account cancelled")
                 print()
                 print()
                 print()
@@ -857,7 +865,7 @@ def del_main():
                 while True:
                     if msvcrt.kbhit():
                         char = msvcrt.getwch()
-                        if char == char(27):
+                        if char == chr(27):
                             return admin_content()
     
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
